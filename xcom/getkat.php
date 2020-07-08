@@ -12,7 +12,5 @@ $result = mysqli_query($conn, $query);
 
 $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-foreach ($items as $item) {
-    echo $item['kategoria'];
-    echo "#";
-}
+print_r(json_encode($items));
+

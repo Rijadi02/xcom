@@ -2,7 +2,7 @@
 
     require('db.php');
 
-    $barkodi = $_GET['kodi'];
+    $barkodi = $_GET['barkodi'];
     
     $query = 'SELECT * FROM xcom WHERE barkodi = '.$barkodi;
 
@@ -15,13 +15,6 @@
     mysqli_close($conn);
 
 
-    echo $item['barkodi'].'#';
-    echo $item['emri'].'#';
-    echo $item['lloji'].'#';
-    echo $item['vendi'].'#';
-    echo $item['data'].'#';
-    echo number_format((float)$item['qmimi'], 2, '.', '')."#";
-    echo $item['rating'].'#';
-    echo $item['ratecount'];
+    print_r(json_encode($item));
 ?>
 

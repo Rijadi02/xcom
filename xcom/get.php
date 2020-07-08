@@ -1,5 +1,7 @@
 <?php
 
+$data = array(); 
+
     // Get
 
     $lloji = $_GET['lloji'];
@@ -8,7 +10,7 @@
 
     $ID = $_GET['ID'];
     
-    $splitchar = "^";
+    //$splitchar = "^";
     
     // Database
 
@@ -24,29 +26,31 @@
 
     $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    foreach($items as $item) 
-    {
-        echo $item['barkodi'];
-        echo "@"; 
-        echo $item['emri'];
-        echo "@";
-        echo $item['lloji'];
-        echo "@";
-        echo $item['vendi'];
-        echo "@";
-        echo $item['data'];
-        echo "@";
-        echo $item['qmimi'];
-        echo "@";
-        echo $item['rating'];
-        echo "@";
-        echo $item['ratecount'];
-        echo "#";
-    } 
+    $data["others"] = json_encode($items);
+
+    // foreach($items as $item) 
+    // {
+    //     echo $item['barkodi'];
+    //     echo "@"; 
+    //     echo $item['emri'];
+    //     echo "@";
+    //     echo $item['lloji'];
+    //     echo "@";
+    //     echo $item['vendi'];
+    //     echo "@";
+    //     echo $item['data'];
+    //     echo "@";
+    //     echo $item['qmimi'];
+    //     echo "@";
+    //     echo $item['rating'];
+    //     echo "@";
+    //     echo $item['ratecount'];
+    //     echo "#";
+    // } 
 
 
 
-    echo $splitchar; 
+    //echo $splitchar; 
 
     // --------------- Rating ----------------------
     
@@ -57,18 +61,17 @@
 
     if(mysqli_num_rows($rating) < 1)
     {
-        echo "0";
+        $data["rating"] = "0";
     }
     else
     {
         $existinginfo = mysqli_fetch_assoc($rating);
-        echo $existinginfo["rate"];
+        $data["rating"] = $existinginfo["rate"];
     }
 
 
 
-    
-    echo $splitchar;
+   
     // --------------- flags ----------------------
 
 
@@ -93,10 +96,7 @@
             mysqli_free_result($result1);
             mysqli_close($conn);
 
-            echo $item['prefix'].'#';
-            echo $item['name'].'#';
-            echo $item['prename'].'#';
-            echo $item['flag'];
+            $data["flag"] = json_encode($item);
 
             break;
         }
@@ -110,10 +110,7 @@
             mysqli_free_result($result1);
             mysqli_close($conn);
 
-            echo $item['prefix'].'#';
-            echo $item['name'].'#';
-            echo $item['prename'].'#';
-            echo $item['flag'];
+            $data["flag"] = json_encode($item);
 
             break;
         }
@@ -127,15 +124,13 @@
             mysqli_free_result($result1);
             mysqli_close($conn);
 
-            echo $item['prefix'].'#';
-            echo $item['name'].'#';
-            echo $item['prename'].'#';
-            echo $item['flag'];
+            $data["flag"] = json_encode($item);
             
             break;
         }
     }
 
+    print_r(json_encode($data));
 
 
 ?>
